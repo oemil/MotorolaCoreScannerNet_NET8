@@ -6,7 +6,6 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
-using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -15,7 +14,7 @@ using CoreScanner;
 using Motorola.Snapi.Commands;
 using Motorola.Snapi.Constants.Enums;
 using Motorola.Snapi.EventArguments;
-using ImageFormat = System.Drawing.Imaging.ImageFormat;
+using System.Drawing;
 
 namespace Motorola.Snapi
 {
@@ -560,19 +559,18 @@ namespace Motorola.Snapi
             var byImage = new byte[len];
             arr.CopyTo(byImage, 0);
             var xdoc = XDocument.Parse(pscannerdata);
-            ImageFormat format = null;
             using (var ms = new MemoryStream(byImage))
             {
-                var image = Image.FromStream(ms);
+                //var rawImage = Image.Load(ms); //Old SixLabors
+                var rawImage = Image.FromStream(ms);
 
-                if ((Constants.Enums.ImageFormat)imageformat == Constants.Enums.ImageFormat.Bmp)
-                    format = ImageFormat.Bmp;
-                else if ((Constants.Enums.ImageFormat)imageformat == Constants.Enums.ImageFormat.Jpeg)
-                    format = ImageFormat.Jpeg;
-                else if ((Constants.Enums.ImageFormat)imageformat == Constants.Enums.ImageFormat.Tiff)
-                    format = ImageFormat.Tiff;
+                var tmpStream = new MemoryStream();
+                //rawImage.SaveAsJpeg(tmpStream); //Old SixLabors
+                rawImage.Save(tmpStream, System.Drawing.Imaging.ImageFormat.Jpeg);
 
-                ImageReceived?.Invoke(this, new ImageEventArgs(ParseScannerId(xdoc), format, image));
+                byte[] image = tmpStream.ToArray();
+
+                ImageReceived?.Invoke(this, new ImageEventArgs(ParseScannerId(xdoc),  image));
             }
         }
 

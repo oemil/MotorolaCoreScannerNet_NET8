@@ -52,7 +52,7 @@ namespace Motorola.Snapi.Commands
         /// </summary>
         public void RestoreFactory()
         {
-            var inXml = string.Format(_setAttributeXml, "X", 1);
+            var inXml = string.Format(_setAttributeXml, 6001, "X", 1);
             string outXml;
             int status;
             _scannerDriver.ExecCommand((int)ScannerCommand.DeviceSetParameters, ref inXml, out outXml, out status);
@@ -66,7 +66,7 @@ namespace Motorola.Snapi.Commands
         /// </summary>
         public void SetCustom()
         {
-            var inXml = string.Format(_setAttributeXml, "X", 2);
+            var inXml = string.Format(_setAttributeXml, 6001, "X", 2);
             string outXml;
             int status;
             _scannerDriver.ExecCommand((int)ScannerCommand.DeviceSetParameters, ref inXml, out outXml, out status);

@@ -1,4 +1,13 @@
-# Motorola / Zebra CoreScanner Driver Wrapper
+# Update Motorola / Zebra CoreScanner Driver Wrapper for .NET 8
+
+Fork of original driver adapted to work with .NET version 8.
+
+Minor adjustments within code to make the wrapper work again:
+- Handling of images within System.Drawing.Common library to prevent the need for additional 3rd party libraries
+- Extended Commands\Default.cs to enable persistance of custom device parameters, as well as factory reset.
+
+
+# Original Readme: Motorola / Zebra CoreScanner Driver Wrapper
 
 C# Wrapper for the Motorola CoreScanner Driver. 
 

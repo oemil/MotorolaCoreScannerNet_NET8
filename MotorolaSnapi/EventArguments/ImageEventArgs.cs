@@ -19,20 +19,14 @@ namespace Motorola.Snapi.EventArguments
         /// <param name="scannerId">Id number of the scanner that triggered the event.</param>
         /// <param name="format">File format of the image.</param>
         /// <param name="image">Image object containing the data of the image that was captured.</param>
-        public ImageEventArgs(uint scannerId, ImageFormat format, Image image) : base(scannerId)
+        public ImageEventArgs(uint scannerId,  byte[] image) : base(scannerId)
         {
-            Format = format;
             Image = image;
         }
 
         /// <summary>
-        ///     File format of the received image.
-        /// </summary>
-        public ImageFormat Format { get; private set; }
-
-        /// <summary>
         ///     Image received by the scanner.
         /// </summary>
-        public Image Image { get; private set; }
+        public byte[] Image { get; private set; }
     }
 }
