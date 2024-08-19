@@ -87,6 +87,23 @@ namespace Motorola.Snapi.Commands
         {
             this.SetAttribute(attributeNumber, (char) type, value.ToString(), permanent);
         }
+
+        /// <summary>
+        /// Trigger pager motor for the specified duration.
+        /// </summary>
+        /// <param name="duration">Duration in 10 ms increments</param>
+        /// <exception cref="ScannerException"></exception>
+        public void TriggerPagerMotor (uint duration)
+		{
+			const string setCommandXml = @"<inArgs><scannerID>{0}</scannerID><cmdArgs><arx-xml><attrib_list><attribute><id>{1}</id><datatype>{2}</datatype><value>{3]</value></attribute></attrib_list></arx-xml></cmdArgs></inArgs>";
+			var inXml = string.Format(setCommandXml, _scannerId, 6033, "X", duration);
+			string outXml;
+			int status;
+			_scannerDriver.ExecCommand((int)ScannerCommand.SetAction, ref inXml, out outXml, out status);
+			var s = (StatusCode)status;
+			if (s != StatusCode.Success)
+				throw new ScannerException(s);
+		}
     }
 
 }
